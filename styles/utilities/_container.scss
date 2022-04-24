@@ -1,0 +1,9 @@
+.container {
+  margin-inline: auto;
+  width: min(100% - var(--padding, 2rem), var(--max-width, 80rem));
+  min-width: 260px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
