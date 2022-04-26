@@ -1,9 +1,21 @@
 import { User } from '@prisma/client';
 import useToggle from '~/utils/useToggle';
 import { NavLink, Link } from '@remix-run/react';
+import UseClickOutside from '~/utils/useClickOutside';
+import UseKeyBoardNavigation from '~/utils/useKboard';
+
 // import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import SkipLink from '~/components/skiplink/skiplink';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, {
+  KeyboardEventHandler,
+  MouseEventHandler,
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 export default function Nav({ user }: { user?: User }) {
   return (
@@ -129,59 +141,71 @@ function Logout() {
 
 function DropDown() {
   const { toggle: menuOpen, setToggleStatus: setMenuOpen } = useToggle(false);
-  // const menuRef = useRef<HTMLDivElement | null>(null);
+  const optionsRef = useRef<HTMLUListElement | null>(null);
+  // Exit when clicking outside of the Menu
+  const navRef = UseClickOutside(
+    closeMenu,
+    menuOpen,
+  ) as RefObject<HTMLDivElement>;
+  const { keyboardActive, setKeyboardActive } = UseKeyBoardNavigation(
+    false,
+    optionsRef,
+    setMenuOpen,
+  );
 
-  function openMenu() {
+  useEffect(() => {
+    if (!menuOpen && keyboardActive) {
+      console.warn('manually turning off Keyboard');
+      setKeyboardActive(false);
+    }
+  }, [menuOpen, keyboardActive, setKeyboardActive]);
+
+  function openMenu(event?: React.SyntheticEvent) {
+    console.log('inside openMenu', { event });
+
+    const nodeList = optionsRef.current?.querySelectorAll('a, button');
+
     setMenuOpen(true);
+
+    if (event?.type === 'keydown' && event.key === 'Enter' && nodeList) {
+      setKeyboardActive(true);
+      return;
+    }
   }
 
-  function selectMenuItem() {
+  function closeMenu() {
     setMenuOpen(false);
   }
 
-  // const handleMenuState = useCallback(() => {
-  //   console.log('func called');
-  //   setMenuOpen();
-  // }, [setMenuOpen]);
-
-  const navRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    function closeMenu() {
-      setMenuOpen(false);
-    }
-
-    function outsideClickHandler(event: MouseEvent) {
-      const target = event.target as HTMLElement;
-
-      if (!navRef.current?.contains(target) && menuOpen) {
-        closeMenu();
-        return;
-      }
-    }
-
-    document.addEventListener('mousedown', outsideClickHandler, true);
-
-    return () => {
-      document.removeEventListener('mousedown', outsideClickHandler, true);
-    };
-  }, [menuOpen, setMenuOpen]);
+  function selectMenuItem() {
+    closeMenu();
+  }
 
   return (
     <li>
       <div ref={navRef} className="nav-dropdown__container">
-        <button className="nav-dropdown__trigger" onClick={() => setMenuOpen()}>
-          Settings TEST menuOpen
+        <button
+          className="nav-dropdown__trigger"
+          onClick={openMenu}
+          onKeyDown={openMenu}
+          aria-controls="User-Settings"
+          aria-expanded={menuOpen ? 'true' : 'false'}
+        >
+          menuOpen
         </button>
         <ul
           className="nav-dropdown__content"
           data-open={menuOpen ? 'true' : 'false'}
+          ref={optionsRef}
+          id="User-Settings"
         >
           <li className="nav-dropdown__item">
             <NavLink
               tabIndex={-1}
               onClick={selectMenuItem}
+              onKeyDown={selectMenuItem}
               to="/auth/user/profile"
+              id="testid"
             >
               Profile
             </NavLink>
@@ -190,6 +214,7 @@ function DropDown() {
             <NavLink
               tabIndex={-1}
               onClick={selectMenuItem}
+              onKeyDown={selectMenuItem}
               to="/auth/user/settings"
             >
               Settings
@@ -199,6 +224,7 @@ function DropDown() {
             <NavLink
               tabIndex={-1}
               onClick={selectMenuItem}
+              onKeyDown={selectMenuItem}
               to="/auth/user/schedule"
             >
               Schedule
