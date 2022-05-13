@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useToggle from './useToggle';
 
 type NodeOptionsType = {
@@ -7,6 +7,12 @@ type NodeOptionsType = {
   next: number;
 };
 
+/**
+ * @param keyBoardActiveState default is NULL, accepts new boolean to toggle Keyboard ON | OFF
+ * @param domRef A React Ref on the parent of the child nodes that will be navigated
+ * @param _cb OPTIONAL: a Callback that will be run when the user clicks Enter or Escape
+ */
+
 function UseKeyBoardNavigation(
   keyBoardActiveState: null | boolean = null,
   domRef: React.MutableRefObject<HTMLElement | null>,
@@ -14,6 +20,11 @@ function UseKeyBoardNavigation(
 ) {
   // debugger;
 
+  const memoIzedCB = _cb ? useMemo(() => _cb(), []) : null;
+
+  useEffect(() => {
+    console.log('CB changed', _cb);
+  }, [_cb]);
   const { toggle: keyboardActive, setToggleStatus: setKeyboardActive } =
     useToggle(keyBoardActiveState ? keyBoardActiveState : false);
 
@@ -62,16 +73,16 @@ function UseKeyBoardNavigation(
           case code === 'Enter': {
             console.log('ENTER PRESSED');
             setKeyboardActive(false);
-            if (_cb) {
-              _cb();
+            if (memoIzedCB !== null) {
+              memoIzedCB();
             }
             break;
           }
           case code === 'Escape': {
             console.log('Escape PRESSED');
             setKeyboardActive(false);
-            if (_cb) {
-              _cb();
+            if (memoIzedCB !== null) {
+              memoIzedCB();
             }
             break;
           }
@@ -109,7 +120,7 @@ function UseKeyBoardNavigation(
     return () => {
       document.removeEventListener('keydown', handleKeyPress, true);
     };
-  }, [keyboardActive, setKeyboardActive, nodeList, _cb, nodeSelector]);
+  }, [keyboardActive, setKeyboardActive, nodeList, nodeSelector]);
 
   // Change focus when the list state changes
   useEffect(() => {

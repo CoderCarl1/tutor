@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-// /**
-//  * @param {boolean} newState default is FALSE, accepts new boolean
-//  */
+/**
+ * @param {boolean} newState default is NULL, accepts new boolean
+ */
 
 export default function useToggle(newState: null | boolean = null) {
   const [toggle, setToggle] = useState(newState === null ? false : newState);

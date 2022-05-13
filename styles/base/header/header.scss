@@ -1,6 +1,6 @@
 /*-----------
 HEADER STYLES
-------------*/ 
+------------*/
 
 header {
   margin-bottom: 2em;
@@ -38,8 +38,7 @@ header {
       position: relative;
       z-index: 0;
     }
-   
- 
+
     &__trigger {
       border: 1px solid;
       padding-inline: 0.5em;
@@ -49,6 +48,7 @@ header {
       padding: 0;
       background: none;
       color: initial;
+      cursor: pointer;
     }
     &__content {
       --transform-timing: cubic-bezier(0.6, 0.13, 0.15, 0.58);
@@ -59,8 +59,9 @@ header {
       flex-direction: column;
       opacity: 0;
       transform: perspective(20px) translate3d(2%, -20rem, -100px)
-      scale(0.01, 0.1);
-      transition: transform 0.35s var(--transform-timing), opacity 0.35s var(--opacity-timing);
+        scale(0.01, 0.1);
+      transition: transform 0.35s var(--transform-timing),
+        opacity 0.35s var(--opacity-timing);
       background-color: var(--clr-neutral-100);
       border-radius: 6px;
       box-shadow: 0 0 20px 0 rgb(0 0 0 / 0.1);
@@ -68,7 +69,7 @@ header {
       li a {
         pointer-events: none;
       }
-      &[data-open="true"] {
+      &[data-open='true'] {
         opacity: 1;
         transform: translate3d(-2.5ch, 1.5ch, 0) scale(1);
         li a {
@@ -77,12 +78,11 @@ header {
       }
     }
 
-
-    &__seperator{
+    &__seperator {
       border: 1px solid var(--clr-neutral-200);
       margin: 0.3em 0;
     }
-    &__arrow{
+    &__arrow {
       background-color: var(--clr-neutral-100);
     }
 
@@ -96,7 +96,7 @@ header {
 
     &__item {
       margin: 0.5em 0;
-      button, 
+      button,
       a {
         display: inline-block;
         width: 100%;
@@ -104,23 +104,19 @@ header {
         &:hover,
         &:focus {
           outline-style: inset;
-          background: linear-gradient(var(--clr-secondary-500), var(--clr-secondary-400));
+          background: linear-gradient(
+            var(--clr-secondary-500),
+            var(--clr-secondary-400)
+          );
           color: var(--clr-neutral-100);
         }
       }
-
-
     }
     // &__item.logout {
 
     // }
   }
-
 }
-
-
-
-
 
 .skip-link {
   position: fixed;
@@ -137,5 +133,3 @@ header {
     transform: translate(0, 0);
   }
 }
-
-

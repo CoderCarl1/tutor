@@ -20,3 +20,8 @@ export type badRequestProps = {
   fieldErrors: fieldErrors;
   fields?: loginFields;
 };
+
+export type HTMLElementEvent<T extends HTMLElement> = Event & {
+  target: T;
+  key: string | undefined;
+};

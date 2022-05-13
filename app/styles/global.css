@@ -177,6 +177,7 @@ header {
   padding: 0;
   background: none;
   color: initial;
+  cursor: pointer;
 }
 .nav-dropdown__content {
   --transform-timing: cubic-bezier(0.6, 0.13, 0.15, 0.58);

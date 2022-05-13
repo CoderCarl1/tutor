@@ -10,7 +10,7 @@
     "db:load": "npx prisma studio",
     "build": "remix build",
     "dev": "remix build && run-p dev:*",
-    "dev:css": "sass styles/exported:app/styles/ --watch ",
+    "dev:css": "sass styles/exported:app/styles/ --watch --update --style=expanded",
     "dev:node": "cross-env NODE_ENV=development nodemon ./build/index.js --watch ./build/index.js",
     "dev:remix": "remix watch",
     "postinstall": "remix setup node",
