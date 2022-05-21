@@ -1,13 +1,14 @@
 module.exports = (io, socket) => {
-  const emitSquares = function (squareData) {
-    io.emit('newSquares', squareData);
-    console.log({ squareData });
+  // set a board of new squares
+  const emitCards = function ({ cards }) {
+    console.log('HERE => ', { cards });
+    io.emit('newCards', cards);
   };
 
-  const emitSelected = function (squareData) {
-    io.emit('newSquares', squareData);
-    console.log({ squareData });
+  const emitSelected = function ({ cards }) {
+    io.emit('newCards', { cards });
+    console.log({ cards });
   };
 
-  socket.on('setSquares', emitSquares);
+  socket.on('setCards', emitCards);
 };

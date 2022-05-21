@@ -3,7 +3,7 @@ import compression from 'compression';
 import { createRequestHandler } from '@remix-run/express';
 import * as serverBuild from '@remix-run/dev/server-build';
 // import { errorLogging, generalLogging } from './app/logging/index';
-const MessageHandlers = require('./socketHandlers/messagingHandler');
+const MessageHandlers = require('./socketHandlers/messagingHandlers');
 const CardHandlers = require('./socketHandlers/cardHandlers');
 const app = express();
 const PORT = process.env.PORT || 4000;

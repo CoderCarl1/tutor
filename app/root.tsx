@@ -1,10 +1,16 @@
-import { Links, LiveReload, Meta, Outlet, Scripts, useLoaderData } from 'remix';
-import type { MetaFunction } from 'remix';
-import { LinksFunction } from '@remix-run/react/routeModules';
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  useLoaderData,
+} from '@remix-run/react';
+import type { MetaFunction } from '@remix-run/node';
 import { getUser } from './utils/session.server';
 import Nav from '~/components/nav/Nav';
 import global from '~/styles/global.css';
-export const links: LinksFunction = () => {
+export function links() {
   return [
     {
       rel: 'icon',
@@ -22,7 +28,7 @@ export const links: LinksFunction = () => {
     //   as: "image",
     // },
   ];
-};
+}
 export const meta: MetaFunction = () => {
   // TODO: update these
   const charset = 'utf-8';
@@ -38,15 +44,6 @@ export const meta: MetaFunction = () => {
     description,
     keywords,
   };
-};
-
-export const loader = async ({ request }: { request: Request }) => {
-  const user = await getUser(request);
-  const data = {
-    user,
-  };
-
-  return data;
 };
 
 export default function App() {
@@ -89,6 +86,8 @@ function Document({ children, title }: documentProps) {
       </head>
       <body>
         {children}
+        <Scripts />
+
         {process.env.NODE_ENV === 'development' ? <LiveReload /> : null}
       </body>
     </html>
@@ -98,6 +97,15 @@ function Document({ children, title }: documentProps) {
 type layoutProps = {
   children?: React.ReactNode;
 };
+export const loader = async ({ request }: { request: Request }) => {
+  const user = await getUser(request);
+  const data = {
+    user,
+  };
+
+  return data;
+};
+
 function Layout({ children }: layoutProps) {
   const { user } = useLoaderData();
 

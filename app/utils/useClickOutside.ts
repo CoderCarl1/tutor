@@ -1,10 +1,20 @@
 import { useRef, useEffect } from 'react';
 
-function UseClickOutside(_cb: Function, ...truthyChecks: Boolean[]) {
-  const domRef = useRef<HTMLElement | null>(null);
+/**
+ *
+ * @param _cb - a Callback that will be run when the user clicks outside
+ * @param [truthyChecks] - any ARGS passed that are false will prevent toggling
+ * @returns {React.MutableRefObject<HTMLElement>} domRef
+ */
+
+function UseClickOutside<T extends HTMLElement>(
+  _cb: Function,
+  ...truthyChecks: Boolean[]
+) {
+  const domRef = useRef<T>(null);
 
   useEffect(() => {
-    if (!truthyChecks.every((check) => check === true)) {
+    if (!truthyChecks.every(Boolean)) {
       return;
     }
 

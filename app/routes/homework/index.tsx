@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Homework() {
   return (
     <div>
-      <h1>Rules page</h1>
+      <h1>Homework page</h1>
     </div>
   );
 }

@@ -1,8 +1,10 @@
+// TODO: Style the chats
+
 export default function ChatMessage({
-  userName,
+  username,
   text,
 }: {
-  userName: string;
+  username: string;
   text: string;
 }) {
   return (
@@ -14,7 +16,7 @@ export default function ChatMessage({
           fontWeight: 'bold',
         }}
       >
-        {userName}
+        {username}
       </span>
       :{' '}
       <span

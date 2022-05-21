@@ -1,6 +1,8 @@
+import { User } from '@prisma/client';
+
 export type message = {
   userName: string;
-  msg: string;
+  message: string;
 };
 
 export type serverMsg = {

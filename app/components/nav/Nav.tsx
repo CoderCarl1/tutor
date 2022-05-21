@@ -9,7 +9,7 @@ import AdminNav from '../adminNav/AdminNav';
 
 // import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import SkipLink from '~/components/skiplink/skiplink';
-import React from 'react';
+import React, { RefObject } from 'react';
 
 export default function Nav({ user }: { user?: User }) {
   return (
@@ -99,6 +99,10 @@ function Logout() {
 
 function DropDown({ user }: { user?: User }) {
   const { toggle: menuOpen, setToggleStatus: setMenuOpen } = useToggle(false);
+  const navRef = UseClickOutside(
+    setMenuOpen,
+    menuOpen,
+  ) as RefObject<HTMLDivElement>;
 
   function openMenu() {
     setMenuOpen(true);
@@ -113,100 +117,50 @@ function DropDown({ user }: { user?: User }) {
   }
 
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="nav-dropdown__btn nav-dropdown__trigger">
-        Settings
-      </DropdownMenu.Trigger>
-
-      <DropdownMenu.Content
-        loop
-        sideOffset={3}
-        className="nav-dropdown__content"
-        onEscapeKeyDown={closeMenu}
-        onPointerDownOutside={closeMenu}
+    <div ref={navRef}>
+      <button
+        aria-haspopup="true"
+        aria-controls="nav-dropdown__content"
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen()}
+        className="nav-dropdown__btn nav-dropdown__trigger"
       >
-        <DropdownMenu.Item className="nav-dropdown__item">
-          <NavLink to="/auth/user/profile" onClick={selectMenuItem}>
-            Profile
-          </NavLink>
-        </DropdownMenu.Item>
-        {/* <DropdownMenu.Item className="nav-dropdown__item">
-          <NavLink to="/auth/user/settings" onClick={selectMenuItem}>
-            Settings
-          </NavLink>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item className="nav-dropdown__item">
-          <NavLink to="/auth/user/schedule" onClick={selectMenuItem}>
-            Schedule
-          </NavLink>
-        </DropdownMenu.Item> */}
-        {/* <DropdownMenu.Separator /> */}
-        {/* {user && user.isAdmin && <AdminNav />} */}
-        {/* <DropdownMenu.Separator className="nav-dropdown__seperator" /> */}
-        {/* <DropdownMenu.Item className="nav-dropdown__item logout">
-          <Logout />
-        </DropdownMenu.Item> */}
-        {/* <DropdownMenu.Arrow className="nav-dropdown__arrow" /> */}
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+        Settings
+      </button>
+      <div
+        role="menu"
+        id="nav-dropdown__content"
+        className="nav-dropdown__content"
+        data-open={menuOpen}
+      >
+        <NavLink
+          role="menuitem"
+          className="nav-dropdown__content-item"
+          to="/auth/user/profile"
+          onClick={selectMenuItem}
+        >
+          Profile
+        </NavLink>
+
+        <NavLink
+          role="menuitem"
+          className="nav-dropdown__content-item"
+          to="/auth/user/settings"
+          onClick={selectMenuItem}
+        >
+          Settings
+        </NavLink>
+        <NavLink
+          role="menuitem"
+          className="nav-dropdown__content-item"
+          to="/auth/user/schedule"
+          onClick={selectMenuItem}
+        >
+          Schedule
+        </NavLink>
+        {user && user.isAdmin && <AdminNav />}
+        <Logout />
+      </div>
+    </div>
   );
-
-  // TODO: refer to check if anything missing
-  // return (
-  //   <li>
-  //     <div ref={navRef} className="nav-dropdown__container">
-  //       <button
-  //         className="nav-dropdown__trigger"
-  //         onClick={openMenu}
-  //         onKeyDown={openMenu}
-  //         aria-controls="User-Settings"
-  //         aria-expanded={menuOpen ? 'true' : 'false'}
-  //       >
-  //         menuOpen
-  //       </button>
-  //       <ul
-  //         className="nav-dropdown__content"
-  //         data-open={menuOpen ? 'true' : 'false'}
-  //         ref={optionsRef}
-  //         id="User-Settings"
-  //       >
-  //         <li className="nav-dropdown__item">
-  //           <NavLink
-  //             tabIndex={-1}
-  //             onClick={selectMenuItem}
-  //             onKeyDown={selectMenuItem}
-  //             to="/auth/user/profile"
-  //             id="testid"
-  //           >
-  //             Profile
-  //           </NavLink>
-  //         </li>
-  //         <li className="nav-dropdown__item">
-  //           <NavLink
-  //             tabIndex={-1}
-  //             onClick={selectMenuItem}
-  //             onKeyDown={selectMenuItem}
-  //             to="/auth/user/settings"
-  //           >
-  //             Settings
-  //           </NavLink>
-  //         </li>
-  //         <li className="nav-dropdown__item">
-  //           <NavLink
-  //             tabIndex={-1}
-  //             onClick={selectMenuItem}
-  //             onKeyDown={selectMenuItem}
-  //             to="/auth/user/schedule"
-  //           >
-  //             Schedule
-  //           </NavLink>
-  //         </li>
-
-  //         {/* <li className="nav-dropdown__item logout">
-  //           <Logout  tabIndex={-1} />
-  //         </li> */}
-  //       </ul>
-  //     </div>
-  //   </li>
-  // );
 }

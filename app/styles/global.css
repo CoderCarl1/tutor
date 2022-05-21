@@ -173,7 +173,6 @@ header {
   padding-inline: 0.5em;
   z-index: 2;
   margin: 0;
-  border: 0;
   padding: 0;
   background: none;
   color: initial;
@@ -187,21 +186,23 @@ header {
   display: flex;
   flex-direction: column;
   opacity: 0;
-  transform: perspective(20px) translate3d(2%, -20rem, -100px) scale(0.01, 0.1);
+  transform: perspective(20px) translate3d(2%, -8rem, -50px) scale(0.01, 0.1);
+  transform-origin: left;
   transition: transform 0.35s var(--transform-timing), opacity 0.35s var(--opacity-timing);
   background-color: var(--clr-neutral-100);
   border-radius: 6px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
   padding: 0.5em 1em;
 }
-.nav-dropdown__content li a {
+.nav-dropdown__content-item {
+  border: 1px solid pink;
   pointer-events: none;
 }
-.nav-dropdown__content[data-open=true] {
+.nav-dropdown__content[data-open=true], .nav-dropdown__content:focus-within {
   opacity: 1;
-  transform: translate3d(-2.5ch, 1.5ch, 0) scale(1);
+  transform: translate3d(-0.5ch, 0, 0) scale(1);
 }
-.nav-dropdown__content[data-open=true] li a {
+.nav-dropdown__content[data-open=true] li a, .nav-dropdown__content:focus-within li a {
   pointer-events: all;
 }
 .nav-dropdown__seperator {

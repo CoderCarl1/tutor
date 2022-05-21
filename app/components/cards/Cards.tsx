@@ -1,24 +1,19 @@
+import { User } from '@prisma/client';
+import { useMatches } from '@remix-run/react';
 import React, { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
 
-type SetCardData = React.Dispatch<
-  React.SetStateAction<{
-    one: string;
-    two: string;
-    three: string;
-    four: string;
-  }>
->;
-type CardData = {
+type CardDataType = {
   one: string;
   two: string;
   three: string;
   four: string;
 };
 
-const socket = io('http://localhost:4000/');
+const ioHost = 'http://localhost:4000';
+const socket = io(ioHost);
 
-export default function CardsParent() {
+function useCards() {
   const [cardData, setCardData] = useState({
     one: '',
     two: '',
@@ -26,47 +21,51 @@ export default function CardsParent() {
     four: '',
   });
 
+  function receiveCardData(cards: CardDataType) {
+    setCardData({ ...cards });
+  }
+  function emitCardData() {
+    socket.emit('setCards', { cards: cardData });
+  }
+
+  return { cardData, setCardData, receiveCardData, emitCardData };
+}
+
+export default function CardsParent() {
+  const { receiveCardData, cardData } = useCards();
+
   useEffect(() => {
-    socket.on('newCards', (data) => {
-      setCardData(data);
+    socket.on('newCards', (cards: CardDataType) => {
+      receiveCardData(cards);
     });
-  }, [cardData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket]);
 
   return (
     <>
       <Cards cardData={cardData} />
-      <SetCards cardData={cardData} setCardData={setCardData} />
+      <CardControls />
     </>
   );
 }
 
-type Props = {
-  setCardData: SetCardData;
-  cardData: CardData;
-};
-
-// TODO: put this behind an AUTH wall
-
-function SetCards({ setCardData, cardData }: Props) {
+function CardControls() {
+  const { user } = useMatches()[0].data as { user: User };
+  const { emitCardData, cardData, setCardData } = useCards();
   const formRef = useRef<HTMLFormElement>(null);
   const { one, two, three, four } = cardData;
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log({ event });
-
     setCardData((prevData) =>
       Object.assign({}, prevData, { [event.target.name]: event.target.value }),
     );
   }
 
-  function emitCards() {
-    socket.emit('setCards', cardData);
-  }
-
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    console.log('form event => :', event);
-    emitCards();
+    if (!user.isAdmin)
+      throw new Error('You must be an administrator to perform this function');
+    emitCardData();
   }
   return (
     <form ref={formRef} className="input-wrapper" onSubmit={handleSubmit}>
@@ -107,15 +106,15 @@ function SetCards({ setCardData, cardData }: Props) {
   );
 }
 
-function Cards({ cardData }: { cardData: CardData }) {
+function Cards({ cardData }: { cardData: CardDataType }) {
   const { one, two, three, four } = cardData;
 
   return (
-    <div className="Cards__container">
-      <div className="Card">{one && one}</div>
-      <div className="Card">{two && two}</div>
-      <div className="Card">{three && three}</div>
-      <div className="Card">{four && four}</div>
+    <div className="cards__container">
+      <div className="cards__container-card">1 - {one && one}</div>
+      <div className="cards__container-card">2 - {two && two}</div>
+      <div className="cards__container-card">3 - {three && three}</div>
+      <div className="cards__container-card">4 - {four && four}</div>
     </div>
   );
 }
