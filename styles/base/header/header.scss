@@ -56,6 +56,7 @@ header {
       position: fixed;
       display: flex;
       flex-direction: column;
+      gap: 0.5em;
       opacity: 0;
       transform: perspective(20px) translate3d(2%, -8rem, -50px)
         scale(0.01, 0.1);
@@ -67,9 +68,24 @@ header {
       box-shadow: 0 0 20px 0 rgb(0 0 0 / 0.1);
       padding: 0.5em 1em;
       &-item {
-        // TODO: style it
-        border: 1px solid pink;
-        pointer-events: none;
+        border: 0;
+        background-color: white;
+        cursor: pointer;
+        padding-block: 0.25em;
+        padding-inline: 0.5em;
+        width: 100%;
+        text-align: left;
+        margin-block-start: 0.2em;
+        &:hover {
+          background-color: var(--clr-primary-100);
+          border-bottom: 2px solid var(--clr-primary-400);
+        }
+        &.admin_link {
+          font-weight: 600;
+          &:hover {
+            background-color: var(--clr-secondary-100);
+          }
+        }
       }
       &[data-open='true'],
       &:focus-within {
@@ -83,7 +99,7 @@ header {
 
     &__seperator {
       border: 1px solid var(--clr-neutral-200);
-      margin: 0.3em 0;
+      margin-block: 0.5em;
     }
     &__arrow {
       background-color: var(--clr-neutral-100);

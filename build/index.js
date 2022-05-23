@@ -1,6 +1,8 @@
 var __create = Object.create;
 var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __getProtoOf = Object.getPrototypeOf;
@@ -18,7 +20,20 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
 var __esm = (fn, res) => function __init() {
   return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
 };
@@ -416,7 +431,7 @@ __export(root_exports, {
   meta: () => meta
 });
 init_react();
-var import_react6 = require("@remix-run/react");
+var import_react5 = require("@remix-run/react");
 
 // app/utils/session.server.ts
 init_react();
@@ -525,9 +540,6 @@ function useToggle(newState = null) {
   return { toggle, setToggleStatus };
 }
 
-// app/components/nav/Nav.tsx
-var import_react4 = require("@remix-run/react");
-
 // app/utils/useClickOutside.ts
 init_react();
 var import_react2 = require("react");
@@ -554,13 +566,27 @@ function UseClickOutside(_cb, ...truthyChecks) {
 }
 var useClickOutside_default = UseClickOutside;
 
-// app/components/adminNav/AdminNav.tsx
+// app/components/NavLink/NavLink.tsx
 init_react();
 var import_remix2 = __toESM(require_remix());
-function AdminNav() {
-  return /* @__PURE__ */ React.createElement(import_remix2.NavLink, {
-    to: "users"
-  }, "Users");
+function Navlink(_a) {
+  var _b = _a, {
+    href,
+    children,
+    className,
+    prefetch = "intent"
+  } = _b, props = __objRest(_b, [
+    "href",
+    "children",
+    "className",
+    "prefetch"
+  ]);
+  return /* @__PURE__ */ React.createElement(import_remix2.NavLink, __spreadProps(__spreadValues({
+    to: href
+  }, props), {
+    className: className + " nav_link btn row",
+    prefetch
+  }), children);
 }
 
 // app/components/skiplink/skiplink.tsx
@@ -588,62 +614,36 @@ SkipLink.defaultProps = {
 var skiplink_default = SkipLink;
 
 // app/components/nav/Nav.tsx
-var import_react5 = __toESM(require("react"));
+var import_react4 = __toESM(require("react"));
 function Nav({ user }) {
-  return /* @__PURE__ */ import_react5.default.createElement("header", null, /* @__PURE__ */ import_react5.default.createElement(skiplink_default, {
+  return /* @__PURE__ */ import_react4.default.createElement("header", null, /* @__PURE__ */ import_react4.default.createElement(skiplink_default, {
     skipTo: "main",
     className: "skip-link"
-  }, /* @__PURE__ */ import_react5.default.createElement("button", {
+  }, /* @__PURE__ */ import_react4.default.createElement("button", {
     type: "button"
-  }, "Skip Navigation Links")), /* @__PURE__ */ import_react5.default.createElement("nav", {
+  }, "Skip Navigation Links")), /* @__PURE__ */ import_react4.default.createElement("nav", {
     className: "nav"
-  }, /* @__PURE__ */ import_react5.default.createElement(import_react4.NavLink, {
+  }, /* @__PURE__ */ import_react4.default.createElement("a", {
     className: "header__logo",
-    to: "/",
-    prefetch: "intent"
-  }, "Home"), /* @__PURE__ */ import_react5.default.createElement("ul", null, /* @__PURE__ */ import_react5.default.createElement("li", null, /* @__PURE__ */ import_react5.default.createElement(import_react4.NavLink, {
-    className: "nav_link btn row",
-    to: "/about",
-    prefetch: "intent"
-  }, "About")), /* @__PURE__ */ import_react5.default.createElement("li", null, /* @__PURE__ */ import_react5.default.createElement(import_react4.NavLink, {
-    className: "nav_link btn row",
-    to: "/rules",
-    prefetch: "intent"
-  }, "Classroom Rules")), user ? /* @__PURE__ */ import_react5.default.createElement(UserNav, {
+    href: "/"
+  }, "Home"), /* @__PURE__ */ import_react4.default.createElement("ul", null, /* @__PURE__ */ import_react4.default.createElement("li", null, /* @__PURE__ */ import_react4.default.createElement(Navlink, {
+    to: "/about"
+  }, "About")), /* @__PURE__ */ import_react4.default.createElement("li", null, /* @__PURE__ */ import_react4.default.createElement(Navlink, {
+    to: "/rules"
+  }, "Classroom Rules")), user ? /* @__PURE__ */ import_react4.default.createElement(UserNav, {
     user
-  }) : /* @__PURE__ */ import_react5.default.createElement("li", null, /* @__PURE__ */ import_react5.default.createElement(import_react4.NavLink, {
-    className: "btn row",
-    to: "/auth/login",
-    prefetch: "intent"
+  }) : /* @__PURE__ */ import_react4.default.createElement("li", null, /* @__PURE__ */ import_react4.default.createElement(Navlink, {
+    to: "/auth/login"
   }, "Login")))));
 }
 function UserNav({ user }) {
-  return /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement("li", null, /* @__PURE__ */ import_react5.default.createElement(import_react4.NavLink, {
-    className: "nav_link btn row",
-    to: "/homework",
-    prefetch: "intent"
-  }, "Homework")), /* @__PURE__ */ import_react5.default.createElement("li", null, /* @__PURE__ */ import_react5.default.createElement(import_react4.NavLink, {
-    className: "nav_link btn row",
-    to: "/tutoring",
-    prefetch: "intent"
-  }, "Tutoring")), /* @__PURE__ */ import_react5.default.createElement(DropDown, {
+  return /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement("li", null, /* @__PURE__ */ import_react4.default.createElement(Navlink, {
+    to: "/homework"
+  }, "Homework")), /* @__PURE__ */ import_react4.default.createElement("li", null, /* @__PURE__ */ import_react4.default.createElement(Navlink, {
+    to: "/tutoring"
+  }, "Tutoring")), /* @__PURE__ */ import_react4.default.createElement(DropDown, {
     user
-  }), /* @__PURE__ */ import_react5.default.createElement("li", null));
-}
-function Logout() {
-  function handlePropogation(event) {
-    console.log("weeee", { event });
-  }
-  return /* @__PURE__ */ import_react5.default.createElement("form", {
-    action: "/auth/logout",
-    method: "POST"
-  }, /* @__PURE__ */ import_react5.default.createElement("button", {
-    type: "submit",
-    className: "nav-dropdown__btn",
-    onKeyDown: handlePropogation,
-    onKeyUp: handlePropogation,
-    onClick: handlePropogation
-  }, "Logout"));
+  }), /* @__PURE__ */ import_react4.default.createElement("li", null));
 }
 function DropDown({ user }) {
   const { toggle: menuOpen, setToggleStatus: setMenuOpen } = useToggle(false);
@@ -657,39 +657,60 @@ function DropDown({ user }) {
   function selectMenuItem() {
     closeMenu();
   }
-  return /* @__PURE__ */ import_react5.default.createElement("div", {
+  return /* @__PURE__ */ import_react4.default.createElement("div", {
     ref: navRef
-  }, /* @__PURE__ */ import_react5.default.createElement("button", {
+  }, /* @__PURE__ */ import_react4.default.createElement("button", {
     "aria-haspopup": "true",
     "aria-controls": "nav-dropdown__content",
     "aria-expanded": menuOpen,
     onClick: () => setMenuOpen(),
     className: "nav-dropdown__btn nav-dropdown__trigger"
-  }, "Settings"), /* @__PURE__ */ import_react5.default.createElement("div", {
+  }, "Settings"), /* @__PURE__ */ import_react4.default.createElement("div", {
     role: "menu",
     id: "nav-dropdown__content",
     className: "nav-dropdown__content",
     "data-open": menuOpen
-  }, /* @__PURE__ */ import_react5.default.createElement(import_react4.NavLink, {
+  }, /* @__PURE__ */ import_react4.default.createElement(Navlink, {
     role: "menuitem",
     className: "nav-dropdown__content-item",
     to: "/auth/user/profile",
     onClick: selectMenuItem
-  }, "Profile"), /* @__PURE__ */ import_react5.default.createElement(import_react4.NavLink, {
+  }, "Profile"), /* @__PURE__ */ import_react4.default.createElement(Navlink, {
     role: "menuitem",
     className: "nav-dropdown__content-item",
     to: "/auth/user/settings",
     onClick: selectMenuItem
-  }, "Settings"), /* @__PURE__ */ import_react5.default.createElement(import_react4.NavLink, {
+  }, "Settings"), /* @__PURE__ */ import_react4.default.createElement(Navlink, {
     role: "menuitem",
     className: "nav-dropdown__content-item",
     to: "/auth/user/schedule",
     onClick: selectMenuItem
-  }, "Schedule"), user && user.isAdmin && /* @__PURE__ */ import_react5.default.createElement(AdminNav, null), /* @__PURE__ */ import_react5.default.createElement(Logout, null)));
+  }, "Schedule"), /* @__PURE__ */ import_react4.default.createElement(Logout, null), user && user.isAdmin && /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement("div", {
+    className: "nav-dropdown__seperator"
+  }), /* @__PURE__ */ import_react4.default.createElement(Navlink, {
+    to: "/admin",
+    role: "menuitem",
+    className: "nav-dropdown__content-item admin_link"
+  }, "Admin"))));
+}
+function Logout() {
+  function handlePropogation(event) {
+    console.log("weeee", { event });
+  }
+  return /* @__PURE__ */ import_react4.default.createElement("form", {
+    action: "/auth/logout",
+    method: "POST"
+  }, /* @__PURE__ */ import_react4.default.createElement("button", {
+    type: "submit",
+    className: "nav-dropdown__content-item  nav_link btn row",
+    onKeyDown: handlePropogation,
+    onKeyUp: handlePropogation,
+    onClick: handlePropogation
+  }, "Logout"));
 }
 
 // app/styles/global.css
-var global_default = "/build/_assets/global-J35JDNVC.css";
+var global_default = "/build/_assets/global-TA4KY6ZK.css";
 
 // route:/home/e14/projects/Andrew/express_be/app/root.tsx
 function links() {
@@ -720,7 +741,7 @@ var meta = () => {
   };
 };
 function App() {
-  return /* @__PURE__ */ React.createElement(Document, null, /* @__PURE__ */ React.createElement(Layout, null, /* @__PURE__ */ React.createElement(import_react6.Outlet, null), /* @__PURE__ */ React.createElement(import_react6.Scripts, null)));
+  return /* @__PURE__ */ React.createElement(Document, null, /* @__PURE__ */ React.createElement(Layout, null, /* @__PURE__ */ React.createElement(import_react5.Outlet, null), /* @__PURE__ */ React.createElement(import_react5.Scripts, null)));
 }
 function ErrorBoundary({ error }) {
   console.log("HERE HAPPENED", { error });
@@ -729,7 +750,7 @@ function ErrorBoundary({ error }) {
 function Document({ children, title }) {
   return /* @__PURE__ */ React.createElement("html", {
     lang: "en"
-  }, /* @__PURE__ */ React.createElement("head", null, /* @__PURE__ */ React.createElement(import_react6.Meta, null), /* @__PURE__ */ React.createElement(import_react6.Links, null), /* @__PURE__ */ React.createElement("title", null, title ? title : "Autha Test")), /* @__PURE__ */ React.createElement("body", null, children, /* @__PURE__ */ React.createElement(import_react6.Scripts, null), true ? /* @__PURE__ */ React.createElement(import_react6.LiveReload, null) : null));
+  }, /* @__PURE__ */ React.createElement("head", null, /* @__PURE__ */ React.createElement(import_react5.Meta, null), /* @__PURE__ */ React.createElement(import_react5.Links, null), /* @__PURE__ */ React.createElement("title", null, title ? title : "Autha Test")), /* @__PURE__ */ React.createElement("body", null, children, /* @__PURE__ */ React.createElement(import_react5.Scripts, null), true ? /* @__PURE__ */ React.createElement(import_react5.LiveReload, null) : null));
 }
 var loader = async ({ request }) => {
   const user = await getUser(request);
@@ -739,7 +760,7 @@ var loader = async ({ request }) => {
   return data;
 };
 function Layout({ children }) {
-  const { user } = (0, import_react6.useLoaderData)();
+  const { user } = (0, import_react5.useLoaderData)();
   return /* @__PURE__ */ React.createElement("div", {
     className: "container"
   }, user ? /* @__PURE__ */ React.createElement(Nav, {
@@ -759,13 +780,13 @@ init_react();
 
 // app/components/cards/Cards.tsx
 init_react();
-var import_react7 = require("@remix-run/react");
-var import_react8 = __toESM(require("react"));
+var import_react6 = require("@remix-run/react");
+var import_react7 = __toESM(require("react"));
 var import_socket = __toESM(require("socket.io-client"));
 var ioHost = "http://localhost:4000";
 var socket = (0, import_socket.default)(ioHost);
 function useCards() {
-  const [cardData, setCardData] = (0, import_react8.useState)({
+  const [cardData, setCardData] = (0, import_react7.useState)({
     one: "",
     two: "",
     three: "",
@@ -781,19 +802,19 @@ function useCards() {
 }
 function CardsParent() {
   const { receiveCardData, cardData } = useCards();
-  (0, import_react8.useEffect)(() => {
+  (0, import_react7.useEffect)(() => {
     socket.on("newCards", (cards) => {
       receiveCardData(cards);
     });
   }, [socket]);
-  return /* @__PURE__ */ import_react8.default.createElement(import_react8.default.Fragment, null, /* @__PURE__ */ import_react8.default.createElement(Cards, {
+  return /* @__PURE__ */ import_react7.default.createElement(import_react7.default.Fragment, null, /* @__PURE__ */ import_react7.default.createElement(Cards, {
     cardData
-  }), /* @__PURE__ */ import_react8.default.createElement(CardControls, null));
+  }), /* @__PURE__ */ import_react7.default.createElement(CardControls, null));
 }
 function CardControls() {
-  const { user } = (0, import_react7.useMatches)()[0].data;
+  const { user } = (0, import_react6.useMatches)()[0].data;
   const { emitCardData, cardData, setCardData } = useCards();
-  const formRef = (0, import_react8.useRef)(null);
+  const formRef = (0, import_react7.useRef)(null);
   const { one, two, three, four } = cardData;
   function handleChange(event) {
     setCardData((prevData) => Object.assign({}, prevData, { [event.target.name]: event.target.value }));
@@ -804,57 +825,57 @@ function CardControls() {
       throw new Error("You must be an administrator to perform this function");
     emitCardData();
   }
-  return /* @__PURE__ */ import_react8.default.createElement("form", {
+  return /* @__PURE__ */ import_react7.default.createElement("form", {
     ref: formRef,
     className: "input-wrapper",
     onSubmit: handleSubmit
-  }, /* @__PURE__ */ import_react8.default.createElement("label", {
+  }, /* @__PURE__ */ import_react7.default.createElement("label", {
     htmlFor: "one"
-  }, "one"), /* @__PURE__ */ import_react8.default.createElement("input", {
+  }, "one"), /* @__PURE__ */ import_react7.default.createElement("input", {
     type: "text",
     name: "one",
     id: "one",
     value: one,
     onChange: (e) => handleChange(e)
-  }), /* @__PURE__ */ import_react8.default.createElement("label", {
+  }), /* @__PURE__ */ import_react7.default.createElement("label", {
     htmlFor: "two"
-  }, "two"), /* @__PURE__ */ import_react8.default.createElement("input", {
+  }, "two"), /* @__PURE__ */ import_react7.default.createElement("input", {
     type: "text",
     name: "two",
     id: "two",
     value: two,
     onChange: (e) => handleChange(e)
-  }), /* @__PURE__ */ import_react8.default.createElement("label", {
+  }), /* @__PURE__ */ import_react7.default.createElement("label", {
     htmlFor: "three"
-  }, "three"), /* @__PURE__ */ import_react8.default.createElement("input", {
+  }, "three"), /* @__PURE__ */ import_react7.default.createElement("input", {
     type: "text",
     name: "three",
     id: "three",
     value: three,
     onChange: (e) => handleChange(e)
-  }), /* @__PURE__ */ import_react8.default.createElement("label", {
+  }), /* @__PURE__ */ import_react7.default.createElement("label", {
     htmlFor: "four"
-  }, "four"), /* @__PURE__ */ import_react8.default.createElement("input", {
+  }, "four"), /* @__PURE__ */ import_react7.default.createElement("input", {
     type: "text",
     name: "four",
     id: "four",
     value: four,
     onChange: (e) => handleChange(e)
-  }), /* @__PURE__ */ import_react8.default.createElement("button", {
+  }), /* @__PURE__ */ import_react7.default.createElement("button", {
     type: "submit"
   }, "submit"));
 }
 function Cards({ cardData }) {
   const { one, two, three, four } = cardData;
-  return /* @__PURE__ */ import_react8.default.createElement("div", {
+  return /* @__PURE__ */ import_react7.default.createElement("div", {
     className: "cards__container"
-  }, /* @__PURE__ */ import_react8.default.createElement("div", {
+  }, /* @__PURE__ */ import_react7.default.createElement("div", {
     className: "cards__container-card"
-  }, "1 - ", one && one), /* @__PURE__ */ import_react8.default.createElement("div", {
+  }, "1 - ", one && one), /* @__PURE__ */ import_react7.default.createElement("div", {
     className: "cards__container-card"
-  }, "2 - ", two && two), /* @__PURE__ */ import_react8.default.createElement("div", {
+  }, "2 - ", two && two), /* @__PURE__ */ import_react7.default.createElement("div", {
     className: "cards__container-card"
-  }, "3 - ", three && three), /* @__PURE__ */ import_react8.default.createElement("div", {
+  }, "3 - ", three && three), /* @__PURE__ */ import_react7.default.createElement("div", {
     className: "cards__container-card"
   }, "4 - ", four && four));
 }
@@ -932,11 +953,11 @@ __export(tutoring_exports, {
   links: () => links3
 });
 init_react();
-var import_react12 = require("@remix-run/react");
+var import_react11 = require("@remix-run/react");
 
 // app/components/chat/chat.tsx
 init_react();
-var import_react10 = require("react");
+var import_react9 = require("react");
 var import_socket2 = __toESM(require("socket.io-client"));
 var import_react_error_boundary = require("react-error-boundary");
 
@@ -973,13 +994,13 @@ function ChatMessage({
 
 // app/components/chat/chatInput.tsx
 init_react();
-var import_react9 = __toESM(require("react"));
+var import_react8 = __toESM(require("react"));
 function ChatInput({
   emitMessage,
   setMessage,
   message
 }) {
-  const messageRef = (0, import_react9.useRef)(null);
+  const messageRef = (0, import_react8.useRef)(null);
   function handleSubmit(event) {
     event.preventDefault();
     if (messageRef.current === null)
@@ -991,14 +1012,14 @@ function ChatInput({
       return;
     setMessage(messageRef.current.value);
   }
-  return /* @__PURE__ */ import_react9.default.createElement("form", {
+  return /* @__PURE__ */ import_react8.default.createElement("form", {
     action: "",
     onSubmit: handleSubmit,
     className: "chat__form"
-  }, /* @__PURE__ */ import_react9.default.createElement("label", {
+  }, /* @__PURE__ */ import_react8.default.createElement("label", {
     htmlFor: "message",
     className: "sr-only"
-  }, "message"), /* @__PURE__ */ import_react9.default.createElement("input", {
+  }, "message"), /* @__PURE__ */ import_react8.default.createElement("input", {
     placeholder: ` message ${String.fromCharCode(10147)}`,
     type: "text",
     value: message,
@@ -1009,12 +1030,12 @@ function ChatInput({
 }
 
 // app/components/chat/chat.tsx
-var import_react11 = require("@remix-run/react");
+var import_react10 = require("@remix-run/react");
 var socket2 = (0, import_socket2.default)("http://localhost:4000/");
 function useChatRoom() {
-  const [userName, setUserName] = (0, import_react10.useState)("");
-  const [message, setMessage] = (0, import_react10.useState)("");
-  const [chat, setChat] = (0, import_react10.useState)([]);
+  const [userName, setUserName] = (0, import_react9.useState)("");
+  const [message, setMessage] = (0, import_react9.useState)("");
+  const [chat, setChat] = (0, import_react9.useState)([]);
   function receiveMessage({ userName: userName2, message: message2 }) {
     setChat((prev) => prev == null ? void 0 : prev.concat({ userName: userName2, message: message2 }));
   }
@@ -1036,8 +1057,8 @@ function useChatRoom() {
   };
 }
 function ChatParent({ children }) {
-  const [showChat, setShowChat] = (0, import_react10.useState)(false);
-  (0, import_react10.useEffect)(() => {
+  const [showChat, setShowChat] = (0, import_react9.useState)(false);
+  (0, import_react9.useEffect)(() => {
     setShowChat(true);
   }, []);
   if (!showChat) {
@@ -1048,7 +1069,7 @@ function ChatParent({ children }) {
   }, children);
 }
 function ChatRoom() {
-  const { user } = (0, import_react11.useMatches)()[0].data;
+  const { user } = (0, import_react10.useMatches)()[0].data;
   const {
     setUserName,
     receiveMessage,
@@ -1057,14 +1078,14 @@ function ChatRoom() {
     setMessage,
     chat
   } = useChatRoom();
-  const containerRef = (0, import_react10.useRef)();
-  (0, import_react10.useEffect)(() => {
+  const containerRef = (0, import_react9.useRef)();
+  (0, import_react9.useEffect)(() => {
     setUserName(user.username);
   }, []);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react9.useEffect)(() => {
     socket2.on("message", ({ userName, message: message2 }) => receiveMessage({ userName, message: message2 }));
   }, [socket2]);
-  (0, import_react10.useLayoutEffect)(() => {
+  (0, import_react9.useLayoutEffect)(() => {
     scrollToBottom();
   });
   function scrollToBottom() {
@@ -1120,7 +1141,7 @@ function links3() {
 function tutoring() {
   return /* @__PURE__ */ React.createElement("div", {
     className: "tutor-wrapper"
-  }, /* @__PURE__ */ React.createElement(import_react12.Outlet, null), /* @__PURE__ */ React.createElement(import_react12.Link, {
+  }, /* @__PURE__ */ React.createElement(import_react11.Outlet, null), /* @__PURE__ */ React.createElement(import_react11.Link, {
     to: "/tutoring/cards"
   }, "Cards"), /* @__PURE__ */ React.createElement(Chat, null));
 }
@@ -1143,6 +1164,14 @@ __export(admin_exports, {
 });
 init_react();
 var import_remix3 = __toESM(require_remix());
+
+// app/components/nav/AdminNav.tsx
+init_react();
+function AdminNav() {
+  return /* @__PURE__ */ React.createElement("div", null, "Admin Nav");
+}
+
+// route:/home/e14/projects/Andrew/express_be/app/routes/admin/index.tsx
 var import_node3 = require("@remix-run/node");
 var loader3 = async ({ request }) => {
   const user = await getUser(request);
@@ -1203,7 +1232,7 @@ __export(login_exports, {
   default: () => login_default
 });
 init_react();
-var import_react13 = require("@remix-run/react");
+var import_react12 = require("@remix-run/react");
 
 // app/utils/helpers.ts
 init_react();
@@ -1250,7 +1279,7 @@ var action2 = async ({ request }) => {
 };
 function Login() {
   var _a, _b, _c, _d;
-  const actionData = (0, import_react13.useActionData)();
+  const actionData = (0, import_react12.useActionData)();
   return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h1", null, "Login"), /* @__PURE__ */ React.createElement("form", {
     method: "POST"
   }, /* @__PURE__ */ React.createElement("fieldset", {
@@ -1308,7 +1337,7 @@ function Index() {
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
 init_react();
-var assets_manifest_default = { "version": "e2a93e68", "entry": { "module": "/build/entry.client-EULKOACT.js", "imports": ["/build/_shared/chunk-IY44QOT7.js", "/build/_shared/chunk-HM6DIERY.js", "/build/_shared/chunk-FN7GJDOI.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-BVEUXWDB.js", "imports": ["/build/_shared/chunk-CBDTYGNE.js"], "hasAction": false, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": true }, "routes/about/index": { "id": "routes/about/index", "parentId": "root", "path": "about", "index": true, "caseSensitive": void 0, "module": "/build/routes/about/index-3FEG64SF.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/admin/index": { "id": "routes/admin/index", "parentId": "root", "path": "admin", "index": true, "caseSensitive": void 0, "module": "/build/routes/admin/index-5OVMQVZL.js", "imports": ["/build/_shared/chunk-EUWCKCHD.js"], "hasAction": false, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/admin/users": { "id": "routes/admin/users", "parentId": "root", "path": "admin/users", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/admin/users-JQNKPLRJ.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/login": { "id": "routes/auth/login", "parentId": "root", "path": "auth/login", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/login-AJRWMTZ6.js", "imports": ["/build/_shared/chunk-EUWCKCHD.js"], "hasAction": true, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/logout": { "id": "routes/auth/logout", "parentId": "root", "path": "auth/logout", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/logout-JALHQ3OH.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/user/profile": { "id": "routes/auth/user/profile", "parentId": "root", "path": "auth/user/profile", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/user/profile-XMFLGYFS.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/user/schedule": { "id": "routes/auth/user/schedule", "parentId": "root", "path": "auth/user/schedule", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/user/schedule-EMMNCPLA.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/user/settings": { "id": "routes/auth/user/settings", "parentId": "root", "path": "auth/user/settings", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/user/settings-QA37MQK2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/homework/index": { "id": "routes/homework/index", "parentId": "root", "path": "homework", "index": true, "caseSensitive": void 0, "module": "/build/routes/homework/index-IYIJ7JED.js", "imports": ["/build/_shared/chunk-EUWCKCHD.js"], "hasAction": false, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-A3RXEKH7.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/rules/index": { "id": "routes/rules/index", "parentId": "root", "path": "rules", "index": true, "caseSensitive": void 0, "module": "/build/routes/rules/index-VNCKI7QQ.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/tutoring/cards/index": { "id": "routes/tutoring/cards/index", "parentId": "root", "path": "tutoring/cards", "index": true, "caseSensitive": void 0, "module": "/build/routes/tutoring/cards/index-CQPF4N4K.js", "imports": ["/build/_shared/chunk-MKWWPU4Z.js"], "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/tutoring/index": { "id": "routes/tutoring/index", "parentId": "root", "path": "tutoring", "index": true, "caseSensitive": void 0, "module": "/build/routes/tutoring/index-CK57ZSBB.js", "imports": ["/build/_shared/chunk-MKWWPU4Z.js"], "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-E2A93E68.js" };
+var assets_manifest_default = { "version": "6ed9a003", "entry": { "module": "/build/entry.client-WQQOS5CE.js", "imports": ["/build/_shared/chunk-IY44QOT7.js", "/build/_shared/chunk-XDLL7Y2L.js", "/build/_shared/chunk-FN7GJDOI.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-H2R3VJ2O.js", "imports": void 0, "hasAction": false, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": true }, "routes/about/index": { "id": "routes/about/index", "parentId": "root", "path": "about", "index": true, "caseSensitive": void 0, "module": "/build/routes/about/index-3FEG64SF.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/admin/index": { "id": "routes/admin/index", "parentId": "root", "path": "admin", "index": true, "caseSensitive": void 0, "module": "/build/routes/admin/index-3UDPT2HF.js", "imports": ["/build/_shared/chunk-EUWCKCHD.js"], "hasAction": false, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/admin/users": { "id": "routes/admin/users", "parentId": "root", "path": "admin/users", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/admin/users-JQNKPLRJ.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/login": { "id": "routes/auth/login", "parentId": "root", "path": "auth/login", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/login-VTKPPFRZ.js", "imports": ["/build/_shared/chunk-EUWCKCHD.js"], "hasAction": true, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/logout": { "id": "routes/auth/logout", "parentId": "root", "path": "auth/logout", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/logout-JALHQ3OH.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/user/profile": { "id": "routes/auth/user/profile", "parentId": "root", "path": "auth/user/profile", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/user/profile-XMFLGYFS.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/user/schedule": { "id": "routes/auth/user/schedule", "parentId": "root", "path": "auth/user/schedule", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/user/schedule-EMMNCPLA.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/auth/user/settings": { "id": "routes/auth/user/settings", "parentId": "root", "path": "auth/user/settings", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/auth/user/settings-QA37MQK2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/homework/index": { "id": "routes/homework/index", "parentId": "root", "path": "homework", "index": true, "caseSensitive": void 0, "module": "/build/routes/homework/index-IYIJ7JED.js", "imports": ["/build/_shared/chunk-EUWCKCHD.js"], "hasAction": false, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-A3RXEKH7.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/rules/index": { "id": "routes/rules/index", "parentId": "root", "path": "rules", "index": true, "caseSensitive": void 0, "module": "/build/routes/rules/index-VNCKI7QQ.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/tutoring/cards/index": { "id": "routes/tutoring/cards/index", "parentId": "root", "path": "tutoring/cards", "index": true, "caseSensitive": void 0, "module": "/build/routes/tutoring/cards/index-CSWZQWDO.js", "imports": ["/build/_shared/chunk-MKWWPU4Z.js"], "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/tutoring/index": { "id": "routes/tutoring/index", "parentId": "root", "path": "tutoring", "index": true, "caseSensitive": void 0, "module": "/build/routes/tutoring/index-R5EXYG5I.js", "imports": ["/build/_shared/chunk-MKWWPU4Z.js"], "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-6ED9A003.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var entry = { module: entry_server_exports };

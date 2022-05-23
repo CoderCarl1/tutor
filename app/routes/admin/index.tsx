@@ -1,5 +1,5 @@
 import { Outlet } from 'remix';
-import AdminNav from '~/components/adminNav/AdminNav';
+import AdminNav from '~/components/nav/AdminNav';
 // import { useActionData } from 'remix';
 // import { badRequest } from '~/utils/helpers';
 // import { db } from '~/utils/db.server';

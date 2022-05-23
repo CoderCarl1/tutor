@@ -14,6 +14,10 @@
     "dev:node": "cross-env NODE_ENV=development nodemon ./build/index.js --watch ./build/index.js",
     "dev:remix": "remix watch",
     "postinstall": "remix setup node",
+    "prod": "remix build && run-p prod:*",
+    "prod:cleanup": "rm -rf app/styles/* ",
+    "prod:css": "sass --no-source-map --style=compressed styles/exported:app/styles/",
+    "prod:node": "cross-env NODE_ENV=production ./build/index.js",
     "start": "cross-env NODE_ENV=production node ./build/index.js"
   },
   "dependencies": {

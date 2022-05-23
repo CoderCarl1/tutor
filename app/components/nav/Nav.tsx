@@ -1,15 +1,13 @@
 import { User } from '@prisma/client';
 import useToggle from '~/utils/useToggle';
-import { NavLink } from '@remix-run/react';
 import UseClickOutside from '~/utils/useClickOutside';
 import UseKeyBoardNavigation from '~/utils/useKeyboard';
-import type { HTMLElementEvent } from '~/types';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import AdminNav from '../adminNav/AdminNav';
+import Navlink from '~/components/NavLink/NavLink';
 
 // import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import SkipLink from '~/components/skiplink/skiplink';
-import React, { RefObject } from 'react';
+import type { RefObject } from 'react';
+import React from 'react';
 
 export default function Nav({ user }: { user?: User }) {
   return (
@@ -18,27 +16,21 @@ export default function Nav({ user }: { user?: User }) {
         <button type="button">Skip Navigation Links</button>
       </SkipLink>
       <nav className="nav">
-        <NavLink className="header__logo" to="/" prefetch="intent">
+        <a className="header__logo" href="/">
           Home
-        </NavLink>
+        </a>
         <ul>
           <li>
-            <NavLink className="nav_link btn row" to="/about" prefetch="intent">
-              About
-            </NavLink>
+            <Navlink to="/about">About</Navlink>
           </li>
           <li>
-            <NavLink className="nav_link btn row" to="/rules" prefetch="intent">
-              Classroom Rules
-            </NavLink>
+            <Navlink to="/rules">Classroom Rules</Navlink>
           </li>
           {user ? (
             <UserNav user={user} />
           ) : (
             <li>
-              <NavLink className="btn row" to="/auth/login" prefetch="intent">
-                Login
-              </NavLink>
+              <Navlink to="/auth/login">Login</Navlink>
             </li>
           )}
         </ul>
@@ -51,49 +43,14 @@ function UserNav({ user }: { user?: User }) {
   return (
     <>
       <li>
-        <NavLink className="nav_link btn row" to="/homework" prefetch="intent">
-          Homework
-        </NavLink>
+        <Navlink to="/homework">Homework</Navlink>
       </li>
       <li>
-        <NavLink className="nav_link btn row" to="/tutoring" prefetch="intent">
-          Tutoring
-        </NavLink>
+        <Navlink to="/tutoring">Tutoring</Navlink>
       </li>
       <DropDown user={user} />
       <li></li>
     </>
-  );
-}
-
-// function AdminNav() {
-//   return (
-//     <DropdownMenu.Item className="nav-dropdown__item">
-//       <NavLink className="nav_link btn row" to="/admin" prefetch="intent">
-//         Admin
-//       </NavLink>
-//     </DropdownMenu.Item>
-//   );
-// }
-
-function Logout() {
-  function handlePropogation(event: React.SyntheticEvent) {
-    console.log('weeee', { event });
-    // event.stopPropagation();
-  }
-
-  return (
-    <form action="/auth/logout" method="POST">
-      <button
-        type="submit"
-        className="nav-dropdown__btn"
-        onKeyDown={handlePropogation}
-        onKeyUp={handlePropogation}
-        onClick={handlePropogation}
-      >
-        Logout
-      </button>
-    </form>
   );
 }
 
@@ -133,34 +90,67 @@ function DropDown({ user }: { user?: User }) {
         className="nav-dropdown__content"
         data-open={menuOpen}
       >
-        <NavLink
+        <Navlink
           role="menuitem"
           className="nav-dropdown__content-item"
           to="/auth/user/profile"
           onClick={selectMenuItem}
         >
           Profile
-        </NavLink>
+        </Navlink>
 
-        <NavLink
+        <Navlink
           role="menuitem"
           className="nav-dropdown__content-item"
           to="/auth/user/settings"
           onClick={selectMenuItem}
         >
           Settings
-        </NavLink>
-        <NavLink
+        </Navlink>
+        <Navlink
           role="menuitem"
           className="nav-dropdown__content-item"
           to="/auth/user/schedule"
           onClick={selectMenuItem}
         >
           Schedule
-        </NavLink>
-        {user && user.isAdmin && <AdminNav />}
+        </Navlink>
         <Logout />
+
+        {user && user.isAdmin && (
+          <>
+            <div className="nav-dropdown__seperator"></div>
+            <Navlink
+              to="/admin"
+              role="menuitem"
+              className="nav-dropdown__content-item admin_link"
+            >
+              Admin
+            </Navlink>
+          </>
+        )}
       </div>
     </div>
+  );
+}
+
+function Logout() {
+  function handlePropogation(event: React.SyntheticEvent) {
+    console.log('weeee', { event });
+    // event.stopPropagation();
+  }
+
+  return (
+    <form action="/auth/logout" method="POST">
+      <button
+        type="submit"
+        className="nav-dropdown__content-item  nav_link btn row"
+        onKeyDown={handlePropogation}
+        onKeyUp={handlePropogation}
+        onClick={handlePropogation}
+      >
+        Logout
+      </button>
+    </form>
   );
 }
